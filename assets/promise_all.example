@@ -1,0 +1,15 @@
+function getUsers(...usernames) {
+    return Promise.all(
+        usernames.map(user => getProfileData(user))
+    ).then(profiles => {
+        return Promise.all(
+            profiles.map(data => getRepos(data.repos_url))
+        )
+    }).catch( err => throw err );
+}
+
+getUsers(['paulirish', 'octocat', 'tj']).then(repos => {
+    // repos[0] => paulirish
+    // repos[1] => octocat
+    // repos[2] => tj
+});
