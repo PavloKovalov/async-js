@@ -482,10 +482,36 @@ export default class Presentation extends React.Component {
                   Jeremy Fairbank: The rise of async JavaScript | Fluent Conf '16&#42;
                 </Link>
               </ListItem>
-
+              <ListItem>
+                <Link textColor="#efefef" href="https://github.com/stevekane/promise-it-wont-hurt">
+                  promise-it-wont-hurt – Promises Workshop for JavaScript!
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://github.com/Thinkful-Ed/callbacks-promises-and-async-functions">
+                  callbacks-promises-and-async-functions – Advanced Async Workshop
+                </Link>
+              </ListItem>
             </List>
           </Slide>
 
+          <Slide bgColor="#0f0f0f">
+            <Heading textColor="lime">Coding Time!</Heading>
+            <br/>
+            <div style={ Object({textAlign: 'left'}) }>
+              <Code style={ Object({color: 'white', whiteSpace: 'nowrap', fontSize: '1.4rem'}) }>
+                $ mkdir i-know-async-kung-fu && cd $_
+              </Code>
+              <br/>
+              <Code style={ Object({color: 'white', whiteSpace: 'nowrap', fontSize: '1.4rem'}) }>
+                $ git clone https://github.com/PavloKovalov/async-js-workbook.git
+              </Code>
+            </div>
+            <hr/>
+            <br/>
+            <Heading size={4} textColor="js_prime">https://goo.gl/Tl5keD</Heading>
+
+          </Slide>
         </Deck>
       </Spectacle>
     );
