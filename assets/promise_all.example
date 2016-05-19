@@ -5,7 +5,7 @@ function getUsers(...usernames) {
         return Promise.all(
             profiles.map(data => getRepos(data.repos_url))
         )
-    }).catch( err => throw err );
+    }).catch( err => { throw err } );
 }
 
 getUsers(['paulirish', 'octocat', 'tj']).then(repos => {

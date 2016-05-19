@@ -10,6 +10,7 @@ import {
   CodePane,
   Deck,
   Fill,
+  Fit,
   Heading,
   Image,
   Layout,
@@ -38,15 +39,21 @@ require("spectacle/lib/themes/default/index.css");
 
 
 const images = {
+  cry: require("../assets/cry.png"),
+  erase: require("../assets/erase_mem.gif"),
   callback: {
     hell: require("../assets/callback_hell.gif"),
-  }
+  },
+  promise: {
+    state: require("../assets/promise.png"),
+  },
+  async: require("../assets/async_in_da_house.jpg")
 };
 
 preloader(images);
 
 const theme = createTheme({
-  primary: "#2e2e2c",
+  primary: "#2d2d2d",
   secondary: "#efefef",
   js_prime: "#f3df49"
 });
@@ -59,7 +66,22 @@ const code = {
     nesting: require("raw!../assets/callback_nesting.example"),
     retrn: require("raw!../assets/callback_return.example")
   },
-  promise: require("raw!../assets/promise.example")
+  promise: {
+    api: require("raw!../assets/promise.example"),
+    resolve: require("raw!../assets/promise_resolve.example"),
+    reject: require("raw!../assets/promise_reject.example"),
+    throw: require("raw!../assets/promise_throw.example"),
+    nested: require("raw!../assets/promise_nested.example"),
+    chain: require("raw!../assets/promise_chain.example"),
+    all: require("raw!../assets/promise_all.example"),
+    unhandled: require("raw!../assets/promise_unhandled.example"),
+    unhandledFix: require("raw!../assets/promise_unhandled_fix.example")
+  },
+  async: {
+    example: require("raw!../assets/async.example"),
+    explained: require("raw!../assets/async_explained.example"),
+    error: require("raw!../assets/async_error.example")
+  }
 }
 
 export default class Presentation extends React.Component {
@@ -107,26 +129,26 @@ export default class Presentation extends React.Component {
             </Appear>
           </Slide>
 
-          <Slide bgImage={images.callback.hell.replace("/", "")}>
-          </Slide>
+          <Slide bgImage={images.callback.hell.replace("/", "")}></Slide>
 
-          <Slide>
+          <Slide textColor="js_prime">
             <Heading fit>Escape from Callback Hell</Heading>
+            <br/>
             <Appear>
-              <Heading size={4}>Named Callbacks</Heading>
+              <Heading textColor="js_prime" size={4}>Named Callbacks</Heading>
             </Appear>
             <Appear>
-              <Heading size={4}>Avoid Nesting</Heading>
+              <Heading textColor="js_prime" size={4}>Avoid Nesting</Heading>
             </Appear>
             <Appear>
-              <Heading size={4}>return</Heading>
+              <Heading textColor="js_prime" size={4}>return</Heading>
             </Appear>
             <Appear>
-              <Heading size={4}>Promises</Heading>
+              <Heading textColor="js_prime" size={4}>Promises</Heading>
             </Appear>
           </Slide>
 
-          <Slide>
+          <Slide note="let's recall our code">
             <CodePane lang="js"
                       style={ biggerFont }
                       source={code.callback.chain} />
@@ -157,99 +179,312 @@ export default class Presentation extends React.Component {
           </Slide>
 
 
-          <Slide>
+          <Slide note="let's talk about promises">
             <Heading fit size={3} textColor="js_prime">&nbsp;Promises&nbsp;</Heading>
           </Slide>
 
-          <Slide>
-            <Heading><Link href="https://promisesaplus.com/" textColor="js_prime">Promises/A+</Link></Heading>
+          <Slide note="what is it?">
+            <Heading size={3}><Link href="https://promisesaplus.com/" textColor="js_prime">Promises/A+</Link></Heading>
             <List textColor>
               <ListItem>“promise” is an object or function with a “then” method</ListItem>
+              <ListItem>“then” accepts two arguments onFulfilled and onRejected, both are optional</ListItem>
               <ListItem>“value” is any legal JavaScript value</ListItem>
               <ListItem>A promise must be in one of three states: pending, fulfilled, or rejected</ListItem>
             </List>
+            <Image src={images.promise.state.replace("/", "")}/>
           </Slide>
 
-          <Slide>
-            <Heading>Base promise</Heading>
-            <Heading>new Promise((resolve, reject) => {})</Heading>
-            <Heading>promise.resolve(42)</Heading>
-            <Heading>promise.reject("oops")</Heading>
-            <Heading>promise.then(onFulfilled, onRejected)</Heading>
-            <Heading>promise.catch(onRejected)</Heading>
-            <Heading>throw new Error("oops") === promise.reject("oops")</Heading>
-          </Slide>
-
-          <Slide>
+          <Slide
+              notes="<ul><li>Promise - is an object/function</li>
+              <li>initial state is <b>pending</b></li>
+              <li>then has two callbacks</li>
+              <li>optional</li><li>catch is an alias</li>
+              <li>when promise changes state it calls corresponding callback</li></ul>">
             <CodePane lang="js"
                       style={ biggerFont }
-                      source={code.promise} />
+                      source={code.promise.api} />
+            <Image src={images.promise.state.replace("/", "")}/>
           </Slide>
 
           <Slide>
+            <Heading size={4} textColor="js_prime">Fulfilled promise</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.6rem'}) }
+                      source={code.promise.resolve} />
+          </Slide>
+
+          <Slide>
+            <Heading size={4} textColor="js_prime">Rejected promise</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.6rem'}) }
+                      source={code.promise.reject} />
+          </Slide>
+
+          <Slide notes="synchronous throw considered as rejection">
+            <Heading size={4} textColor="js_prime">Throw to reject</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.6rem'}) }
+                      source={code.promise.throw} />
+          </Slide>
+
+          <Slide notes="let's recap our last code and refator it with promises">
+            <Heading size={4} textColor="js_prime">refactoring time!</Heading>
+
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.2rem', paddingLeft: '20%'}) }
+                      source={code.callback.retrn} />
+          </Slide>
+
+          <Slide notes="<ul><li>consider all API functions also promises</li>
+          <li>we create new Promise with executor - function that describe behaviour</li>
+          <li>executor is expected to initiate some asynchronous work</li>
+          <li>once that completes, call either the resolve or reject function to resolve the promise's final value</li>
+          <li>or else reject it if an error occurred</li>
+          </ul>">
+            <Heading size={4} textColor="js_prime">Promisify all the things</Heading>
+
+            <CodePane lang="js"
+                      style={ biggerFont }
+                      source={code.promise.nested} />
+          </Slide>
+
+          <Slide notes="<ul><li>instead of nesting promise into promise</li>
+          <li>we can return new promise in then callback</li>
+          <li>so it can be chained</li>
+          <li>and allows to add .then and .catch to new promise</li>
+          </ul>">
+            <Heading size={4} textColor="js_prime">Promise chaining</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ biggerFont }
+                      source={code.promise.chain} />
+          </Slide>
+
+          <Slide notes="<ul>
+          <li>returns a promise that resolves when all of the promises in the argument have resolved</li>
+          <li> or rejects with the reason of the first passed promise that rejects.</li></ul>">
+            <Heading size={4} textColor="js_prime">Promise.all</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ biggerFont }
+                      source={code.promise.all} />
+          </Slide>
+
+          <Slide notes="<ul>
+          <li>but promises is not a silver bullet</li>
+          <li>it also has some cons</li>
+          <li>most common is an unhandled rejections</li>
+          <li>if the Promise rejected in doSomethingComplicated()</li>
+          <li>there no catchers on it</li>
+          <li>and promise from fetch is returned</li>
+          <li>another example of silent promise</li>
+          <li>that is not visible/catchable from outside of main()</li>
+          </ul>">
+            <Heading size={4} textColor="orange" fit>unhandled rejections</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ biggerFont }
+                      source={code.promise.unhandled} />
+          </Slide>
+
+          <Slide notes="<ul>
+            <li> to fix</li>
+            <li> return the last then</li>
+            <li> return always</li>
+            <li>window.addEventListener('unhandledrejection', cb)</li>
+          </ul>">
+            <Heading size={4} textColor="js_prime">Fix 'em all!</Heading>
+            <br/>
+            <CodePane lang="js"
+                      style={ biggerFont }
+                      source={code.promise.unhandledFix} />
+          </Slide>
+
+          <Slide notes=".then is cool, yep? seems, you're doing something wrong">
             <Heading>fetch.then(...)</Heading>
             <Heading>&nbsp;.then(...)</Heading>
             <Heading>&nbsp;.then(...)</Heading>
             <Heading>&nbsp;.then(...)</Heading>
+            <Heading>&nbsp;.then(...)</Heading>
+            <Heading>&nbsp;.then(...)</Heading>
+            <Heading>&nbsp;.then(...)</Heading>
+            <Heading>&nbsp;.then(...)</Heading>
+            <Heading>&nbsp;.then(...)</Heading>
           </Slide>
 
           <Slide>
-            <Layout>
-              <Fill>
-                <Heading>+</Heading>
-                <List>
-                  <ListItem>
-                    <Text></Text>
-                  </ListItem>
-                  <ListItem>
-                    <Text>Promise.all</Text>
-                  </ListItem>
+            <Heading size={3} textColor="js_prime">Let's recap!</Heading>
+            <br/>
+            <Layout fit>
+              <Fill style={ Object({marginRight: '10%'}) }>
+                <Heading size={2} text>Callbacks</Heading>
+                <Appear>
+                <List textColor="#efefef">
+                    <ListItem>
+                      Hard to figure out
+                    </ListItem>
+                    <ListItem>
+                      Hard to debug
+                    </ListItem>
+                    <ListItem>
+                      Works, if pay attention to code
+                    </ListItem>
+                    <ListItem>
+                      Can bring you to Egypt &#42;
+                    </ListItem>
                 </List>
+                </Appear>
               </Fill>
               <Fill>
-                <Heading>-</Heading>
-                <List>
-                  <ListItem>
-                    <Text></Text>
-                  </ListItem>
-                </List>
+                <Heading size={2}>Promises</Heading>
+                <Appear>
+                  <List textColor="#efefef">
+                    <ListItem>
+                      Clean API
+                    </ListItem>
+                    <ListItem>
+                      Simplified code flow &#42;
+                    </ListItem>
+                    <ListItem>
+                      Promise.all
+                    </ListItem>
+                    <ListItem>
+                      Promise.TЛEN()
+                    </ListItem>
+                  </List>
+                </Appear>
               </Fill>
             </Layout>
+          </Slide>
+
+          <Slide bgColor="black">
+            <Heading fit textColor="#efefef" style={ Object({fontWeight: 'normal'})}>One more thing…</Heading>
           </Slide>
 
           <Slide>
             <Heading size={3} fit textColor="js_prime">async / await</Heading>
+            <br/>
+            <Heading size={5} fit>
+              <Link href="https://github.com/tc39/ecmascript-asyncawait" textColor="white" target="_blank">
+              https://github.com/tc39/ecmascript-asyncawait
+              </Link>
+            </Heading>
           </Slide>
 
           <Slide>
-            <Layout>
-              <Fill>
-                <Heading>+</Heading>
-                <List>
-                  <ListItem>
-                    <Text></Text>
-                  </ListItem>
-                  <ListItem>
-                    <Text></Text>
-                  </ListItem>
-                </List>
-              </Fill>
-              <Fill>
-                <Heading>-</Heading>
-                <List>
-                  <ListItem>
-                    <Text>is not a part of ES2015</Text>
-                  </ListItem>
-                </List>
-                <List>
-                  <ListItem>
-                    <Text>is not a part of ES2016 either</Text>
-                  </ListItem>
-                </List>
-              </Fill>
-            </Layout>
+            <Appear><Heading fit>not a part of ES2015</Heading></Appear>
+            <Appear><Heading fit>not even ES2016</Heading></Appear>
+            <Appear><Heading fit>stage 3 means candidate to be included in ES2017</Heading></Appear>
+            <Appear><Heading textColor="js_prime">but it's veeery cool!</Heading></Appear>
           </Slide>
 
+          <Slide>
+            <Heading size={2}>
+              Async/await is a kind of readable, synchronous code flow with asyncronous nonblocking execution
+            </Heading>
+          </Slide>
+
+          <Slide>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.6rem'}) }
+                      source={code.async.example} />
+          </Slide>
+
+          <Slide>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.8rem'}) }
+                      source={code.async.explained} />
+          </Slide>          
+          
+          <Slide>
+            <Heading size={2} textColor="js_prime">error handling</Heading>
+            <CodePane lang="js"
+                      style={ Object({fontSize: '1.5rem'}) }
+                      source={code.async.error} />
+          </Slide>
+
+          <Slide bgImage={images.erase.replace("/", "")}></Slide>
+
+          <Slide>
+            <Heading>We've got a hope</Heading>
+            <br/>
+            <Appear>
+              <Heading size={4} textColor="js_prime">
+                Babel&nbsp;
+                <Link textColor="white" href="http://masnun.com/2015/11/11/using-es7-asyncawait-today-with-babel.html">
+                  to the rescue
+                </Link>
+              </Heading>
+            </Appear>
+            <br/>
+            <Appear>
+              <div>
+                <Heading size={6}>
+                  <Link textColor="js_prime" href="https://twitter.com/joewalnes/status/732377366639476737">“async/await hits V8! Not long until it'll be in Chrome” – @joewalnes</Link>
+                </Heading>
+                <Image src={images.async.replace("/", "")} width="80%"/>
+              </div>
+            </Appear>
+          </Slide>
+
+          <Slide>
+            <Heading size={3} fit textColor="js_prime">That's all, Folks!</Heading>
+          </Slide>
+
+          <Slide>
+            <Heading size={5} textColor="js_prime">Useful Links</Heading>
+            <List>
+              <ListItem>
+                <Link textColor="#efefef" href="https://promisesaplus.com/">
+                  Promises/A+
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://learn.javascript.ru/promise">
+                  JavaScript.ru – Promise
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Promise">
+                  MDN – JavaScript reference - Promise
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">
+                  MDN – Web APIs – Fetch API
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://www.youtube.com/watch?v=y8xPMYwQ0U8">
+                  Let's write code – What is Async JavaScript?
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://www.youtube.com/watch?v=qN0dkXj7jc0">
+                  Let's write code – Mastering JavaScript Callbacks
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://www.youtube.com/watch?v=g90irqWEqd8">
+                  Let's write code – Async JavaScript with Promises
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://www.youtube.com/watch?v=lil4YCCXRYc">
+                  Jafar Husain: Async Programming in ES7 | JSConfUS '15&#42;
+                </Link>
+              </ListItem>
+              <ListItem>
+                <Link textColor="#efefef" href="https://www.youtube.com/watch?v=QtgR94Q2pt4">
+                  Jeremy Fairbank: The rise of async JavaScript | Fluent Conf '16&#42;
+                </Link>
+              </ListItem>
+
+            </List>
+          </Slide>
 
         </Deck>
       </Spectacle>
