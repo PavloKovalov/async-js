@@ -30,9 +30,6 @@ import preloader from "spectacle/lib/utils/preloader";
 // Import theme
 import createTheme from "spectacle/lib/themes/default";
 
-// Import custom component
-import Interactive from "../assets/interactive";
-
 // Require CSS
 require("normalize.css");
 require("spectacle/lib/themes/default/index.css");
@@ -397,8 +394,8 @@ export default class Presentation extends React.Component {
             <CodePane lang="js"
                       style={ Object({fontSize: '1.8rem'}) }
                       source={code.async.explained} />
-          </Slide>          
-          
+          </Slide>
+
           <Slide>
             <Heading size={2} textColor="js_prime">error handling</Heading>
             <CodePane lang="js"
