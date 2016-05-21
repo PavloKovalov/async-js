@@ -188,7 +188,7 @@ export default class Presentation extends React.Component {
               <ListItem>“value” is any legal JavaScript value</ListItem>
               <ListItem>A promise must be in one of three states: pending, fulfilled, or rejected</ListItem>
             </List>
-            <Image src={images.promise.state.replace("/", "")}/>
+            <Image width="40%" src={images.promise.state.replace("/", "")}/>
           </Slide>
 
           <Slide
@@ -349,7 +349,10 @@ export default class Presentation extends React.Component {
                       Promise.all
                     </ListItem>
                     <ListItem>
-                      Promise.TЛEN()
+                      Promise.then()
+                    </ListItem>
+                    <ListItem>
+                      unhandled rejections
                     </ListItem>
                   </List>
                 </Appear>
@@ -506,7 +509,7 @@ export default class Presentation extends React.Component {
             </div>
             <hr/>
             <br/>
-            <Heading size={4} textColor="js_prime">https://goo.gl/Tl5keD</Heading>
+            <Heading size={4} textColor="js_prime">http://bit.do/asyncjs</Heading>
 
           </Slide>
         </Deck>
