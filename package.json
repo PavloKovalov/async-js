@@ -1,8 +1,8 @@
 {
-  "name": "spectacle-boilerplate",
-  "version": "1.0.1",
-  "description": "ReactJS Powered Presentation Framework",
-  "main": "lib/index.js",
+  "name": "async-js",
+  "version": "0.1.1",
+  "description": "Presentation on JavaScript async code flows",
+  "main": "index.html",
   "scripts": {
     "clean": "rimraf dist",
     "build": "cross-env NODE_ENV=production webpack --config webpack.config.production.js",
