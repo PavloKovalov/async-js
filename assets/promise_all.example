@@ -1,4 +1,4 @@
-function getUsers(...usernames) {
+function loadUsersRepos(usernames) {
     return Promise.all(
         usernames.map(user => getProfileData(user))
     ).then(profiles => {
@@ -8,8 +8,8 @@ function getUsers(...usernames) {
     }).catch( err => { throw err } );
 }
 
-getUsers(['paulirish', 'octocat', 'tj']).then(repos => {
-    // repos[0] => paulirish
-    // repos[1] => octocat
-    // repos[2] => tj
+loadUsersRepos(['brendaneich', 'douglascrockford', 'getify']).then(repos => {
+    // repos[0] => brendaneich
+    // repos[1] => douglascrockford
+    // repos[2] => getify
 });
