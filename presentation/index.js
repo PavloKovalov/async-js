@@ -264,9 +264,9 @@ export default class Presentation extends React.Component {
           <li>returns a promise that resolves when all of the promises in the argument have resolved</li>
           <li> or rejects with the reason of the first passed promise that rejects.</li></ul>">
             <Heading size={4} textColor="jsPrime">Promise.all</Heading>
-            <br/>
+
             <CodePane lang="js"
-              style={ biggerFont }
+              style={ { fontSize: "1.4rem" } }
               source={ code.promise.all }/>
           </Slide>
 
@@ -327,11 +327,13 @@ export default class Presentation extends React.Component {
                       Hard to debug
                     </ListItem>
                     <ListItem>
-                      Works, if pay attention to code
+                      Works if you pay attention to code quality
                     </ListItem>
-                    <ListItem>
-                      Can bring you to Egypt &#42;
-                    </ListItem>
+                    <Appear>
+                      <ListItem>
+                        Can bring you to Egypt<sup>&#9786;</sup>
+                      </ListItem>
+                    </Appear>
                   </List>
                 </Appear>
               </Fill>
@@ -343,16 +345,16 @@ export default class Presentation extends React.Component {
                       Clean API
                     </ListItem>
                     <ListItem>
-                      Simplified code flow &#42;
+                      Simplified code flow&#42;
                     </ListItem>
                     <ListItem>
                       Promise.all
                     </ListItem>
                     <ListItem>
-                      Promise.then()
+                      unhandled rejections
                     </ListItem>
                     <ListItem>
-                      unhandled rejections
+                      not cancelable&#42;
                     </ListItem>
                   </List>
                 </Appear>
