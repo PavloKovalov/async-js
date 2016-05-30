@@ -14,4 +14,4 @@ function getUserRepos(username) {
     });
 }
 
-getUserRepos.then(renderReposView);
+getUserRepos('octocat').then(renderReposView);
